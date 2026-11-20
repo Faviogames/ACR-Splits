@@ -1,0 +1,202 @@
+[
+  {
+    "id": "WrcgBeES1Full",
+    "slug": "be_es1",
+    "name": "ZonneBeke",
+    "country": "Bélgica",
+    "country_code": "BE",
+    "variant": "ES1"
+  },
+  {
+    "id": "WrcgBeSS1Full",
+    "slug": "be_ss1",
+    "name": "Dikkebus",
+    "country": "Bélgica",
+    "country_code": "BE",
+    "variant": "SS1"
+  },
+  {
+    "id": "WrcgBeSS2Full",
+    "slug": "be_ss2",
+    "name": "Kemmelberg",
+    "country": "Bélgica",
+    "country_code": "BE",
+    "variant": "SS2"
+  },
+  {
+    "id": "WrcgEsSS1Full",
+    "slug": "es_ss1",
+    "name": "Riudecanyes",
+    "country": "España",
+    "country_code": "ES",
+    "variant": "SS1"
+  },
+  {
+    "id": "WrcgEsSS1RFull",
+    "slug": "es_ss1r",
+    "name": "Riudecanyes · inverso",
+    "country": "España",
+    "country_code": "ES",
+    "variant": "SS1R"
+  },
+  {
+    "id": "WrcgEsSS4Full",
+    "slug": "es_ss4",
+    "name": "Savallà",
+    "country": "España",
+    "country_code": "ES",
+    "variant": "SS4"
+  },
+  {
+    "id": "WrcgEsSS4RFull",
+    "slug": "es_ss4r",
+    "name": "Savallà · inverso",
+    "country": "España",
+    "country_code": "ES",
+    "variant": "SS4R"
+  },
+  {
+    "id": "WrcgFrSS1Full",
+    "slug": "fr_ss1",
+    "name": "Pietrosella",
+    "country": "Francia",
+    "country_code": "FR",
+    "variant": "SS1"
+  },
+  {
+    "id": "WrcgFrSS1RFull",
+    "slug": "fr_ss1r",
+    "name": "Pietrosella · inverso",
+    "country": "Francia",
+    "country_code": "FR",
+    "variant": "SS1R"
+  },
+  {
+    "id": "WrcgGrSS3Full",
+    "slug": "gr_ss3",
+    "name": "Paleohori",
+    "country": "Grecia",
+    "country_code": "GR",
+    "variant": "SS3"
+  },
+  {
+    "id": "WrcgItSS1Full",
+    "slug": "it_ss1",
+    "name": "Ronde",
+    "country": "Italia",
+    "country_code": "IT",
+    "variant": "SS1"
+  },
+  {
+    "id": "WrcgItSS1RFull",
+    "slug": "it_ss1r",
+    "name": "Ronde · inverso",
+    "country": "Italia",
+    "country_code": "IT",
+    "variant": "SS1R"
+  },
+  {
+    "id": "WrcgKeES1Full",
+    "slug": "ke_es1",
+    "name": "Ntulele",
+    "country": "Kenya",
+    "country_code": "KE",
+    "variant": "ES1"
+  },
+  {
+    "id": "WrcgKeES1RFull",
+    "slug": "ke_es1r",
+    "name": "Ntulele · inverso",
+    "country": "Kenya",
+    "country_code": "KE",
+    "variant": "ES1R"
+  },
+  {
+    "id": "WrcgKeSS1Full",
+    "slug": "ke_ss1",
+    "name": "Ngema",
+    "country": "Kenya",
+    "country_code": "KE",
+    "variant": "SS1"
+  },
+  {
+    "id": "WrcgKeSS1RFull",
+    "slug": "ke_ss1r",
+    "name": "Ngema · inverso",
+    "country": "Kenya",
+    "country_code": "KE",
+    "variant": "SS1R"
+  },
+  {
+    "id": "WrcgKeSS2Full",
+    "slug": "ke_ss2",
+    "name": "Seyabei",
+    "country": "Kenya",
+    "country_code": "KE",
+    "variant": "SS2"
+  },
+  {
+    "id": "WrcgKeSS2RFull",
+    "slug": "ke_ss2r",
+    "name": "Seyabei · inverso",
+    "country": "Kenya",
+    "country_code": "KE",
+    "variant": "SS2R"
+  },
+  {
+    "id": "WrcgMxES1Full",
+    "slug": "mx_es1",
+    "name": "El Chocolate",
+    "country": "México",
+    "country_code": "MX",
+    "variant": "ES1"
+  },
+  {
+    "id": "WrcgMxSS1Full",
+    "slug": "mx_ss1",
+    "name": "Media Luna",
+    "country": "México",
+    "country_code": "MX",
+    "variant": "SS1"
+  },
+  {
+    "id": "WrcgMxSS2Full",
+    "slug": "mx_ss2",
+    "name": "Ibarrilla",
+    "country": "México",
+    "country_code": "MX",
+    "variant": "SS2"
+  },
+  {
+    "id": "WrcgDePanzerplatteFull",
+    "slug": "panzerplatte",
+    "name": "Arena Panzerplatte",
+    "country": "Alemania",
+    "country_code": "DE",
+    "variant": "SSS"
+  },
+  {
+    "id": "WrcgPtSS4Full",
+    "slug": "pt_ss4",
+    "name": "Arganil",
+    "country": "Portugal",
+    "country_code": "PT",
+    "variant": "SS4"
+  },
+  {
+    "id": "WrcgSeSS3Full",
+    "slug": "se_ss3",
+    "name": "Sävar",
+    "country": "Suecia",
+    "country_code": "SE",
+    "variant": "SS3"
+  },
+  {
+    "id": "WrcgSeSS4Full",
+    "slug": "se_ss4",
+    "name": "Brattby",
+    "country": "Suecia",
+    "country_code": "SE",
+    "variant": "SS4"
+  }
+]

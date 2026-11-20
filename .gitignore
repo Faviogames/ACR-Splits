@@ -1,0 +1,7 @@
+records/dist/
+records/build-tools/
+**/bin/
+**/obj/
+**/__pycache__/
+**/app-data/
+.env*
