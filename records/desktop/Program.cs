@@ -14,7 +14,7 @@ internal static class Program
         using var mutex = new Mutex(true, @"Local\ACR_MOD_RECORDS_DESKTOP", out var first);
         if (!first)
         {
-            var window = FindWindow(null, "ACR MOD RECORDS");
+            var window = FindWindow(null, "ACR LAPS ONLINE");
             if (window != IntPtr.Zero) { ShowWindow(window, 9); SetForegroundWindow(window); }
             return;
         }
@@ -36,27 +36,25 @@ internal sealed class RecordsWindow : Form
     private Process? worker;
     private string origin = "", token = "";
     private bool closing, allowClose;
+    private string language = "en";
+    private string T(string en, string es) => language == "es" ? es : en;
     private Size regularSize = new(1300, 940);
 
     public RecordsWindow()
     {
-        Text = "ACR MOD RECORDS";
+        try
+        {
+            using var settings = JsonDocument.Parse(File.ReadAllText(Path.Combine(data, "settings.json")));
+            if (settings.RootElement.TryGetProperty("language", out var saved) && saved.ValueKind == JsonValueKind.String && saved.GetString() == "es") language = "es";
+        }
+        catch (Exception error) when (error is IOException or JsonException) { }
+        Text = "ACR LAPS ONLINE";
         BackColor = Color.FromArgb(21, 21, 22);
         ClientSize = regularSize;
         MinimumSize = new Size(940, 720);
         StartPosition = FormStartPosition.CenterScreen;
         Controls.Add(browser);
-        using var bitmap = new Bitmap(64, 64);
-        using (var graphics = Graphics.FromImage(bitmap))
-        {
-            graphics.Clear(Color.FromArgb(26, 26, 28));
-            using var brush = new SolidBrush(Color.FromArgb(255, 48, 59));
-            graphics.FillPolygon(brush, [new(8, 48), new(29, 16), new(40, 16), new(19, 48)]);
-            graphics.FillPolygon(brush, [new(28, 48), new(49, 16), new(60, 16), new(39, 48)]);
-        }
-        var iconHandle = bitmap.GetHicon();
-        using (var temporary = System.Drawing.Icon.FromHandle(iconHandle)) Icon = (Icon)temporary.Clone();
-        DestroyIcon(iconHandle);
+        Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
         Shown += async (_, _) => await Initialize();
         FormClosing += OnClosing;
     }
@@ -106,13 +104,13 @@ internal sealed class RecordsWindow : Form
                 start.ArgumentList.Add("-m"); start.ArgumentList.Add("records.app");
                 start.Environment["PYTHONPATH"] = root;
                 start.Environment["ACR_RECORDS_DATA"] = data;
-                worker = Process.Start(start) ?? throw new IOException("No se pudo iniciar el motor local.");
+                worker = Process.Start(start) ?? throw new IOException(T("Could not start the local engine.", "No se pudo iniciar el motor local."));
                 for (int attempt = 0; attempt < 40 && !await ReadRuntime(); attempt++)
                 {
-                    if (worker.HasExited) throw new IOException("El motor local terminó. Revisa records/app-data/app.log.");
+                    if (worker.HasExited) throw new IOException(T("The local engine stopped. Check app.log in the app data folder.", "El motor local terminó. Revisa app.log en la carpeta de datos de la app."));
                     await Task.Delay(250);
                 }
-                if (origin.Length == 0) throw new IOException("El motor local no respondió a tiempo.");
+                if (origin.Length == 0) throw new IOException(T("The local engine did not respond in time.", "El motor local no respondió a tiempo."));
             }
             var environment = await CoreWebView2Environment.CreateAsync(null, Path.Combine(data, "webview"));
             await browser.EnsureCoreWebView2Async(environment);
@@ -127,7 +125,7 @@ internal sealed class RecordsWindow : Form
         }
         catch (Exception error)
         {
-            MessageBox.Show(this, "No se pudo abrir ACR MOD RECORDS.\n\n" + error.Message, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(this, T("Could not open ACR LAPS ONLINE.\n\n", "No se pudo abrir ACR LAPS ONLINE.\n\n") + error.Message, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
             Close();
         }
     }
@@ -141,6 +139,9 @@ internal sealed class RecordsWindow : Form
             var message = document.RootElement;
             switch (message.GetProperty("action").GetString())
             {
+                case "language":
+                    language = message.GetProperty("language").GetString() == "es" ? "es" : "en";
+                    break;
                 case "close": Close(); break;
                 case "login":
                     var loginUrl = message.GetProperty("url").GetString()!;
@@ -148,7 +149,10 @@ internal sealed class RecordsWindow : Form
                         Process.Start(new ProcessStartInfo(loginUrl) { UseShellExecute = true });
                     break;
                 case "website":
-                    Process.Start(new ProcessStartInfo("https://acrsplits.online") { UseShellExecute = true });
+                    var stage = message.TryGetProperty("stage", out var stageValue) ? stageValue.GetString() : null;
+                    var website = "https://acrsplits.online";
+                    if (stage is not null && System.Text.RegularExpressions.Regex.IsMatch(stage, @"^Wrcg[A-Za-z0-9_]{1,90}$")) website += "/#/stage/" + stage;
+                    Process.Start(new ProcessStartInfo(website) { UseShellExecute = true });
                     break;
                 case "compact":
                     bool compact = message.GetProperty("enabled").GetBoolean();
@@ -157,7 +161,7 @@ internal sealed class RecordsWindow : Form
                     TopMost = compact;
                     break;
                 case "export":
-                    using (var dialog = new SaveFileDialog { Title = "Exportar resultado", Filter = "Resultado JSON (*.json)|*.json", FileName = "ACR-MOD-RECORDS-resultado.json", AddExtension = true, OverwritePrompt = true })
+                    using (var dialog = new SaveFileDialog { Title = T("Export result", "Exportar resultado"), Filter = T("JSON result (*.json)|*.json", "Resultado JSON (*.json)|*.json"), FileName = "ACR-MOD-RECORDS-result.json", AddExtension = true, OverwritePrompt = true })
                     {
                         if (dialog.ShowDialog(this) != DialogResult.OK) return;
                         var result = message.GetProperty("result");
@@ -194,7 +198,7 @@ internal sealed class RecordsWindow : Form
             }
         }
         catch (Exception error) when (error is HttpRequestException or TaskCanceledException or OperationCanceledException)
-        { MessageBox.Show(this, "No se confirmó el cierre del motor. La traza ya escrita se conserva.\n" + error.Message, Text, MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+        { MessageBox.Show(this, T("Engine shutdown was not confirmed. The saved trace is preserved.\n", "No se confirmó el cierre del motor. La traza ya escrita se conserva.\n") + error.Message, Text, MessageBoxButtons.OK, MessageBoxIcon.Warning); }
         finally { allowClose = true; browser.Dispose(); client.Dispose(); worker?.Dispose(); Close(); }
     }
 

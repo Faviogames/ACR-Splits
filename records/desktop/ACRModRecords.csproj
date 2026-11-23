@@ -5,8 +5,13 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <AssemblyName>ACR MOD RECORDS</AssemblyName>
-    <Version>0.3.0</Version>
+    <AssemblyName>ACR LAPS ONLINE</AssemblyName>
+    <Version>0.8.0</Version>
+    <Product>ACR LAPS ONLINE</Product>
+    <Title>ACR LAPS ONLINE</Title>
+    <Description>FOR YOUR MODS — community stage records</Description>
+    <Company>Faviogames</Company>
+    <ApplicationIcon>../ui/assets/app.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
   </PropertyGroup>

@@ -5,6 +5,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 import mimetypes
 import os
+import re
 from pathlib import Path
 import sys
 import threading
@@ -14,7 +15,7 @@ from urllib.parse import urlsplit, parse_qs
 from records.capture import Recorder, SharedMemory
 from records.inspect_save import InvalidSave, inspect
 from records.match_result import match
-from records.online import Online, publication_payload
+from records.online import Online, publication_payload, request_json, SITE
 
 ROOT = Path(__file__).resolve().parent
 DATA = Path(os.environ.get("ACR_RECORDS_DATA", str(ROOT / "app-data")))
@@ -148,9 +149,11 @@ class Engine:
         self.lock = threading.RLock()
         self.online = Online(data)
         self.stop = threading.Event()
-        self.settings = {"auto_capture": True}
+        self.settings = {"auto_capture": True, "language": "en"}
         if (data / "settings.json").exists():
             self.settings.update(read_json(data / "settings.json"))
+        if self.settings["language"] not in ("en", "es"):
+            self.settings["language"] = "en"
         self.recorder = Recorder(data / "captures", "pendiente_de_identificar")
         self.watch = SaveWatch()
         self.report = None
@@ -275,8 +278,9 @@ class Engine:
                 status = "waiting_result" if self.recorder.candidate else "recording"
             else:
                 status = "ready" if self.live is not None else "game_closed"
-            return {"app": "ACR MOD RECORDS", "version": "0.7.0", "status": status,
+            return {"app": "ACR MOD RECORDS", "version": "0.8.0", "status": status,
                     "connected": self.live is not None, "auto_capture": bool(self.settings["auto_capture"]),
+                    "language": self.settings["language"],
                     "error": self.error, "live": None if self.live is None else {
                         key: self.live[key] for key in ("clock_ms", "car", "track_label", "speed_kmh", "player")},
                     "start_observed": active.get("start_observed") if active else None,
@@ -304,6 +308,13 @@ class Engine:
             write_json(path, attempt)
             self.refresh_history()
         return receipt
+
+    def set_language(self, language):
+        if language not in ("en", "es"):
+            raise ValueError("Invalid language")
+        with self.lock:
+            self.settings["language"] = language
+            write_json(self.data / "settings.json", self.settings)
 
     def set_auto(self, enabled):
         if type(enabled) is not bool:
@@ -375,7 +386,9 @@ class Handler(BaseHTTPRequestHandler):
             try:
                 query = parse_qs(urlsplit(self.path).query)
                 self.server.engine.online.callback(path.removeprefix("/auth/callback/"), query.get("code", [None])[0])
-                message = "Sesión iniciada. Ya puedes volver a ACR MOD RECORDS y cerrar esta pestaña."
+                message = ("Sesión iniciada. Ya puedes volver a ACR LAPS ONLINE y cerrar esta pestaña."
+                           if self.server.engine.settings["language"] == "es" else
+                           "Signed in. You can return to ACR LAPS ONLINE and close this tab.")
                 code = 200
             except ValueError as error:
                 message, code = str(error), 400
@@ -391,9 +404,26 @@ class Handler(BaseHTTPRequestHandler):
                     return self.send(200, self.server.engine.online.account())
                 except ValueError as error:
                     return self.send(400, {"error": str(error)})
+            if path == "/api/leaderboard":
+                stage = parse_qs(urlsplit(self.path).query).get("stage", [""])[0]
+                if not re.fullmatch(r"Wrcg[A-Za-z0-9_]{1,90}", stage):
+                    return self.send(400, {"error": "Invalid stage"})
+                try:
+                    cached = getattr(self.server, "board_cache", None)
+                    if not cached or cached[0] != stage or cached[1] < time.monotonic():
+                        value = request_json(SITE + "/api/leaderboard?stage=" + stage)
+                        if not isinstance(value.get("records"), list):
+                            raise ValueError("Invalid leaderboard response")
+                        cached = (stage, time.monotonic() + 60, value)
+                        self.server.board_cache = cached
+                    return self.send(200, cached[2])
+                except ValueError as error:
+                    return self.send(502, {"error": str(error)})
             return self.send(404, {"error": "Ruta inexistente"})
-        files = {"/": "index.html", "/app.css": "app.css", "/app.js": "app.js",
+        files = {"/": "index.html", "/app.css": "app.css", "/app.js": "app.js", "/i18n.js": "i18n.js",
                  "/assets/hero.png": "assets/hero.png", "/assets/logo.svg": "assets/logo.svg"}
+        if re.fullmatch(r"/flags/[a-z]{2}\.svg", path):
+            files[path] = path[1:]
         if path not in files:
             return self.send(404, {"error": "Archivo inexistente"})
         file = ROOT / "ui" / files[path]
@@ -444,6 +474,12 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send(200, self.server.engine.sync_publications())
             except (ValueError,OSError) as error:
                 return self.send(400,{"error":str(error) if isinstance(error,ValueError) else "No se pudo actualizar el estado del envío."})
+        if path == "/api/language":
+            try:
+                self.server.engine.set_language(body.get("language"))
+            except ValueError as error:
+                return self.send(400, {"error": str(error)})
+            return self.send(200, {"ok": True})
         if path == "/api/auto":
             try:
                 self.server.engine.set_auto(body.get("enabled"))

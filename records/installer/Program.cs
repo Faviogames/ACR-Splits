@@ -6,7 +6,7 @@ using System.Text.Json;
 
 internal static class Program
 {
-    const string ReleaseVersion = "0.7.0", Repo = "Faviogames/ACR-Splits";
+    const string ReleaseVersion = "0.8.0", Repo = "Faviogames/ACR-Splits";
     static readonly string Home = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ACRSplits");
     static readonly JsonSerializerOptions Json = new() { WriteIndented = true };
     [STAThread]
@@ -34,18 +34,20 @@ internal static class Program
                 File.WriteAllText(versionFile + ".tmp", version);
                 File.Move(versionFile + ".tmp", versionFile, true);
             }
-            var launcher = Path.Combine(Home, "ACR Splits.exe");
+            var launcher = Path.Combine(Home, "ACR LAPS ONLINE.exe");
             if (!string.Equals(Environment.ProcessPath, launcher, StringComparison.OrdinalIgnoreCase) && installed <= Version.Parse(ReleaseVersion))
                 File.Copy(Environment.ProcessPath!, launcher, true);
             Shortcut(launcher);
             if (CheckUpdate(version).GetAwaiter().GetResult()) return;
             var folder = Path.Combine(Home, "versions", version);
-            var start = new ProcessStartInfo(Path.Combine(folder, "ACR MOD RECORDS.exe")) { WorkingDirectory = folder, UseShellExecute = false };
+            var executable = Path.Combine(folder, "ACR LAPS ONLINE.exe");
+            if (!File.Exists(executable)) executable = Path.Combine(folder, "ACR MOD RECORDS.exe");
+            var start = new ProcessStartInfo(executable) { WorkingDirectory = folder, UseShellExecute = false };
             start.Environment["ACR_RECORDS_DATA"] = Path.Combine(Home, "data");
-            using var app = Process.Start(start) ?? throw new IOException("Could not start ACR Splits.");
+            using var app = Process.Start(start) ?? throw new IOException("Could not start ACR LAPS ONLINE.");
             app.WaitForExit();
         }
-        catch (Exception error) { MessageBox.Show(error.Message, "ACR Splits", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        catch (Exception error) { MessageBox.Show(error.Message, "ACR LAPS ONLINE", MessageBoxButtons.OK, MessageBoxIcon.Error); }
     }
     static void Install(string root)
     {
@@ -65,7 +67,7 @@ internal static class Program
                 Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
                 entry.ExtractToFile(destination, false);
             }
-            foreach (var file in new[] { "ACR MOD RECORDS.exe", "python/python.exe", "records/app.py", "records/stages.json", "records/ui/index.html" })
+            foreach (var file in new[] { "ACR LAPS ONLINE.exe", "ACR MOD RECORDS.exe", "python/python.exe", "records/app.py", "records/stages.json", "records/ui/index.html" })
                 if (!File.Exists(Path.Combine(staging, file))) throw new IOException("Incomplete application payload: " + file);
             Directory.Move(staging, target);
         }
@@ -126,13 +128,15 @@ internal static class Program
     }
     static void Shortcut(string launcher)
     {
-        var link = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Programs), "ACR Splits.lnk");
-        if (File.Exists(link)) return;
+        var programs = Environment.GetFolderPath(Environment.SpecialFolder.Programs);
+        var link = Path.Combine(programs, "ACR LAPS ONLINE.lnk");
+        var oldLink = Path.Combine(programs, "ACR Splits.lnk");
+        if (!File.Exists(link) && File.Exists(oldLink)) File.Move(oldLink, link);
         var shellType = Type.GetTypeFromProgID("WScript.Shell");
         if (shellType is null) return;
         dynamic shell = Activator.CreateInstance(shellType)!;
         dynamic shortcut = shell.CreateShortcut(link);
-        shortcut.TargetPath = launcher; shortcut.WorkingDirectory = Home; shortcut.Description = "ACR Splits — community stage records"; shortcut.Save();
+        shortcut.TargetPath = launcher; shortcut.WorkingDirectory = Home; shortcut.IconLocation = launcher + ",0"; shortcut.Description = "ACR LAPS ONLINE — FOR YOUR MODS"; shortcut.Save();
     }
     static void SelfTest(string report)
     {

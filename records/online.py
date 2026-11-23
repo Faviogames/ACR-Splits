@@ -163,7 +163,7 @@ class Online:
         if not session:
             return {"signed_in": False}
         meta = session["user"].get("user_metadata", {})
-        return {"signed_in": True, "name": (self.profile or {}).get("name") or meta.get("preferred_username") or meta.get("full_name") or "Piloto Discord",
+        return {"signed_in": True, "id": session["user"].get("id"), "name": (self.profile or {}).get("name") or meta.get("preferred_username") or meta.get("full_name") or "Piloto Discord",
                 "name_chosen": (self.profile or {}).get("name_chosen", False)}
 
     def account(self, name=None):

@@ -1,11 +1,13 @@
 $ErrorActionPreference = 'Stop'
 $recordsRoot = $PSScriptRoot
-$version = '0.7.0'
+$version = '0.8.0'
 $dist = Join-Path $recordsRoot 'dist'
 $payload = Join-Path $dist 'payload'
 New-Item -ItemType Directory -Path $dist,$payload -Force | Out-Null
 dotnet publish (Join-Path $recordsRoot 'desktop/ACRModRecords.csproj') -c Release -r win-x64 --self-contained true -p:Version=$version -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:DebugType=None -p:IncludeNativeLibrariesForSelfExtract=true -o $payload
 if ($LASTEXITCODE -ne 0) { throw 'Desktop build failed' }
+# Compatibility filename for previously installed 0.7 launchers.
+Copy-Item (Join-Path $payload 'ACR LAPS ONLINE.exe') (Join-Path $payload 'ACR MOD RECORDS.exe') -Force
 $pythonZip = Join-Path $recordsRoot 'build-tools/python-3.14.0-embed-amd64.zip'
 if (!(Test-Path $pythonZip)) { throw 'Download official Python 3.14.0 Windows embeddable x64 archive to build-tools first' }
 Expand-Archive $pythonZip (Join-Path $payload 'python') -Force
