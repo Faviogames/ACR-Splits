@@ -6,7 +6,7 @@ using System.Text.Json;
 
 internal static class Program
 {
-    const string ReleaseVersion = "0.8.0", Repo = "Faviogames/ACR-Splits";
+    const string ReleaseVersion = "0.8.1", Repo = "Faviogames/ACR-Splits";
     static readonly string Home = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ACRSplits");
     static readonly JsonSerializerOptions Json = new() { WriteIndented = true };
     [STAThread]

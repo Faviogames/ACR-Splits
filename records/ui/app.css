@@ -8,6 +8,7 @@ body.compact{--sidebar:0px}body.compact .sidebar,body.compact .auto-control,body
 [hidden]{display:none!important}
 #name-form>label{display:block;font-size:15px}#pilot-name{display:block;width:100%;box-sizing:border-box;margin-top:10px;padding:12px;border:1px solid #ffffff40;border-radius:5px;background:#181719;color:#fff;font:inherit}#name-help,#name-error{font-size:14px}#name-error{color:#ff8991}#name-form .name-confirm{display:flex;gap:10px;align-items:flex-start;line-height:1.6}#name-confirm{margin-top:4px;flex-shrink:0}
 #language-select{min-width:115px;padding:10px 12px;background:#181719;color:#fff;border:1px solid #ffffff40;border-radius:5px;font:inherit}#language-select:focus-visible{outline:2px solid #ff303b;outline-offset:3px}
-.ranking-stats{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap}.ranking-stats>div{flex:1;min-width:160px;padding:18px;background:var(--panel);border:1px solid var(--line);border-radius:6px}.ranking-stats span{display:block;font-size:14px;color:var(--muted)}.ranking-stats strong{display:block;margin-top:10px;font-size:25px;font-variant-numeric:tabular-nums}.ranking-flag{width:24px;height:18px;object-fit:cover;vertical-align:middle;margin-right:8px}.ranking-stats+#ranking-board{overflow-x:auto}#ranking-board .history-table{min-width:570px}
 
 .brand{margin-bottom:28px}.brand strong{font-size:18px;letter-spacing:0;line-height:1.2}.brand small{font-size:11px;letter-spacing:1px}.brand img{width:32px}.sidebar-bottom{padding-top:16px}
+
+.topbar-right #language-select{min-width:58px;width:58px;padding:7px 6px;font-size:12px}

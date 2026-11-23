@@ -26,34 +26,7 @@ function showView(view) {
   currentView = view;
   document.querySelectorAll(".view").forEach(node => node.classList.toggle("active", node.id === `view-${view}`));
   document.querySelectorAll(".nav-item").forEach(node => node.classList.toggle("active", node.dataset.view === view));
-  if(view==='ranking')loadRanking();
-}
-let rankingRequest=0,rankingRows=[],rankingStage=null,rankingStatus='empty';
-async function loadRanking(){
-  const selected=state?.history.find(item=>item.id===selectedId)||state?.history[0];
-  rankingStage=selected;rankingRows=[];rankingStatus=selected?'loading':'empty';renderRanking();
-  const request=++rankingRequest;if(!selected)return;
-  try{const result=await api('/api/leaderboard?stage='+encodeURIComponent(selected.stage_game_id));if(request!==rankingRequest)return;
-    rankingRows=result.records.filter(row=>row.status==='accepted'&&Number.isSafeInteger(row.total_ms)&&row.total_ms>0).sort((a,b)=>a.total_ms-b.total_ms||Date.parse(a.date)-Date.parse(b.date));rankingStatus='ready';
-  }catch{if(request!==rankingRequest)return;rankingStatus='error';}
-  renderRanking();
-}
-function renderRanking(){
-  const signature=JSON.stringify([AppI18n.language,rankingStatus,rankingStage?.id,rankingRows,state?.account?.id]);
-  if($('ranking-board').dataset.signature===signature)return;
-  $('ranking-board').dataset.signature=signature;
-  text('ranking-stage',rankingStage?.stage||t('Completa un tramo para ver su clasificación.'),false);
-  const mine=rankingRows.findIndex(row=>row.pilot_id===state?.account?.id),best=rankingRows[0],personal=rankingRows[mine];
-  text('ranking-position',mine>=0?'#'+(mine+1):'—');text('ranking-best',formatTime(personal?.total_ms));text('ranking-gap',personal?'+'+formatTime(personal.total_ms-best.total_ms):'—');
-  const container=$('ranking-board');container.replaceChildren();
-  if(rankingStatus!=='ready'||!rankingRows.length){const note=document.createElement('p');note.className='empty-message';note.textContent=t(rankingStatus==='loading'?'Cargando clasificación…':rankingStatus==='error'?'No se pudo cargar la clasificación. Vuelve a intentarlo.':rankingStatus==='empty'?'Completa un tramo para ver su clasificación.':'Todavía no hay tiempos publicados.');container.append(note);return;}
-  const table=document.createElement('table');table.className='history-table';const header=table.createTHead().insertRow();
-  for(const label of ['Posición','Piloto','Coche','Tiempo total']){const cell=document.createElement('th');cell.textContent=t(label);header.append(cell);}
-  const body=table.createTBody();
-  rankingRows.slice(0,5).forEach((row,index)=>{const tr=body.insertRow();tr.insertCell().textContent=['🥇','🥈','🥉'][index]||String(index+1);const driver=tr.insertCell();
-    if(/^[A-Za-z]{2}$/.test(row.country_code||'')){const flag=document.createElement('img');flag.src='/flags/'+row.country_code.toLowerCase()+'.svg';flag.alt=row.country_code;flag.className='ranking-flag';driver.append(flag);}
-    driver.append(document.createTextNode(row.pilot));tr.insertCell().textContent=row.car.replace(/([a-z])([A-Z])/g,'$1 $2').replaceAll('_',' ');const timing=tr.insertCell();timing.className='time-cell';timing.textContent=formatTime(row.total_ms);
-  });container.append(table);
+
 }
 function historyTable(containerId, items, limit) {
   const container = $(containerId);
@@ -99,7 +72,7 @@ function render() {
   const running = state.live && ["recording","waiting_result"].includes(state.status);
   text("connection-label",state.connected?"ACR conectado":"Esperando ACR"); $("connection-dot").className="dot"+(state.connected?" green":"");
   $("auto-toggle").checked=state.auto_capture;
-  text("settings-auto",state.auto_capture?"Desactivar":"Activar");
+
   text("player-name",state.account?.signed_in?state.account.name:t("Entrar con Discord"),false);
   const profileLabel=state.account?.signed_in?(state.account.name_chosen?(AppI18n.language==='es'?'Cerrar sesión de ':'Sign out of ')+state.account.name:'Elegir tu nombre de piloto'):'Entrar con Discord';
   document.querySelector('.profile').title=t(profileLabel);
@@ -123,7 +96,7 @@ function render() {
   const [title,description,color] = statuses[state.status] || statuses.attention;
   text("status-title",title); text("status-description",state.error || description); $("status-dot").className="dot"+(color?" "+color:"");
   historyTable("recent-history",items,2);
-  if(currentView==='ranking')renderRanking();
+
   const search=$("history-search").value.toLocaleLowerCase(AppI18n.language);
   historyTable("all-history",items.filter(item=>`${item.stage} ${item.car} ${item.country}`.toLocaleLowerCase(AppI18n.language).includes(search)));
   text("history-summary",`${items.length} ${items.length===1?t("pasada guardada"):t("pasadas guardadas")}`);
@@ -148,9 +121,9 @@ function toggleCompact() {
 document.querySelectorAll("[data-view]").forEach(node=>node.addEventListener("click",()=>showView(node.dataset.view)));
 document.querySelector(".brand").addEventListener("click",event=>{event.preventDefault();showView("session");});
 $("auto-toggle").addEventListener("change",event=>setAuto(event.target.checked));
-$("settings-auto").addEventListener("click",()=>setAuto(!state?.auto_capture));
+
 $("history-search").addEventListener("input",render);
-$("compact-button").addEventListener("click",toggleCompact);$("settings-compact").addEventListener("click",toggleCompact);
+$("compact-button").addEventListener("click",toggleCompact);
 $("publish-button").addEventListener("click",()=>{
   const result=state?.history.find(item=>item.id===selectedId)||state?.history[0];if(!result)return;
   if(!result.can_publish){toast('Esta pasada no conserva una captura completa desde la salida. Haz un nuevo intento con la app abierta.');return;}
@@ -192,12 +165,6 @@ async function accountAction(){
   }catch(error){toast(error.message);}
 }
 profile.addEventListener('click',accountAction);
-$('open-ranking').addEventListener('click',()=>{
-  const stage=rankingStage?.stage_game_id;
-  if(window.chrome?.webview)window.chrome.webview.postMessage({action:'website',stage:stage||null});
-  else window.open('https://acrsplits.online'+(stage?'/#/stage/'+encodeURIComponent(stage):''),'_blank','noopener,noreferrer');
-});
-$('refresh-ranking').addEventListener('click',loadRanking);
 profile.addEventListener('keydown',event=>{if(['Enter',' '].includes(event.key)){event.preventDefault();accountAction();}});
 $('name-dialog').querySelector('.name-close').addEventListener('click',()=>$('name-dialog').close());
 $('name-logout').addEventListener('click',async()=>{

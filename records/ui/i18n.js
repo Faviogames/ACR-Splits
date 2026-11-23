@@ -4,7 +4,7 @@ const AppI18n=(()=>{
   const pairs={
     'CLASIFICACIÓN ONLINE':'ONLINE LEADERBOARD','Tu posición':'Your position','Tu mejor tiempo':'Your best time','Diferencia con el récord':'Gap to world record','Ver clasificación completa':'View full leaderboard','Actualizar':'Refresh','Posición':'Position','Piloto':'Player','Coche':'Car','Completa un tramo para ver su clasificación.':'Complete a stage to view its leaderboard.','Cargando clasificación…':'Loading leaderboard…','No se pudo cargar la clasificación. Vuelve a intentarlo.':'Could not load the leaderboard. Please try again.','Todavía no hay tiempos publicados.':'No published times yet.',
     'TU PADDOCK':'YOUR PADDOCK','Principal':'Main','Sesión':'Session','Mis tiempos':'My times','Clasificación':'Leaderboards','Ajustes':'Settings',
-    'ACR LAPS ONLINE, sesión':'ACR LAPS ONLINE, session','En este PC':'On this PC','Tus pasadas, bajo tu control.':'Your runs, your control.','VERSIÓN · 0.8.0':'VERSION · 0.8.0',
+    'ACR LAPS ONLINE, sesión':'ACR LAPS ONLINE, session','En este PC':'On this PC','Tus pasadas, bajo tu control.':'Your runs, your control.','VERSIÓN · 0.8.1':'VERSION · 0.8.1',
     'Conectando…':'Connecting…','Captura automática':'Automatic capture','Alternar ventana compacta':'Toggle compact window','Piloto local':'Local driver',
     'TUS MAPAS. TUS TIEMPOS.':'YOUR STAGES. YOUR TIMES.','Listos para la salida':'Ready for the start','Abre Assetto Corsa Rally y carga un mapa mod':'Open Assetto Corsa Rally and load a modded stage',
     'IMAGEN CONCEPTUAL':'CONCEPT IMAGE','ÚLTIMA PASADA':'LATEST RUN','Resultado leído del juego':'Result read from the game','Guardado local':'Saved locally','Conducción':'Driving time','Penalización':'Penalty','Tiempo total':'Total time',

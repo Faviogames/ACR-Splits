@@ -36,6 +36,12 @@ assert.equal(i18n.t('constructor'),'constructor');
 assert.equal(i18n.t('Seyabei'),'Seyabei');
 // Check every Spanish static string in the actual template is translated.
 const html=fs.readFileSync(__dirname+'/ui/index.html','utf8');
+assert.doesNotMatch(html,/data-view="(?:settings|ranking)"|id="view-(?:settings|ranking)"/);
+assert.match(html,/<div class="topbar-right"><select id="language-select"/);
+const app=fs.readFileSync(__dirname+'/ui/app.js','utf8');
+const ids=new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(match=>match[1]));
+for(const [,id] of app.matchAll(/(?:\$|text)\(["']([^"']+)["']/g))assert.ok(ids.has(id),`UI refers to missing element: ${id}`);
+assert.doesNotMatch(app,/loadRanking|renderRanking|\/api\/leaderboard/);
 for(const match of html.matchAll(/>([^<>]+)</g)){
   const value=match[1].trim();
   if(/[áéíóúñÁÉÍÓÚÑ]/.test(value)&&value!=='Español')assert.notEqual(i18n.t(value),value,`Missing translation: ${value}`);

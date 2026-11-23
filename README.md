@@ -39,3 +39,7 @@ Only client sources and the stage-name catalogue are included. No game assets, s
 FOR YOUR MODS. English by default with persistent Spanish in Settings. Larger labels, stage leaderboards in the client, and a branded executable/installer icon. JSON export is retained in source but disabled in the normal interface. The website adds stable three-colour rally avatars and private notifications capped at 20 deliveries per UTC day, retaining the latest 50. Reverse stages are temporarily hidden on the website; the database and capture catalogue retain them.
 
 The existing GitHub repository, download asset filename, AppData folder and legacy launcher/executable aliases remain compatible with version 0.7. The new main executable is ACR LAPS ONLINE.exe. Signing is separate from the app icon; this build remains unsigned.
+
+## Version 0.8.1
+
+Simplified desktop navigation: Session and My times. Settings and Leaderboards were removed; EN / ES is now a small selector in the top bar. Language choice is remembered. Capture and compact-window controls remain directly accessible. Website leaderboards stay at acrsplits.online. Existing official installers update automatically on the next launch; legacy portable clients need the standalone installer once.
