@@ -25,7 +25,7 @@ Open the app before starting the stage. Capture starts automatically when the st
 
 1. Download the official Python 3.14.0 embeddable Windows x64 archive from https://www.python.org/ftp/python/3.14.0/python-3.14.0-embed-amd64.zip to `records/build-tools/python-3.14.0-embed-amd64.zip`.
 2. Run `./records/build_desktop.ps1`.
-3. Run `records/dist/ACR-Splits-Setup.exe --self-test <absolute-report-path.json>` and check `result: PASS`. This extracts in a temporary directory, rejects unsafe ZIP paths, verifies idempotence and data preservation, and imports the standalone Python/TLS runtime and 25-stage catalogue.
+3. Run `records/dist/ACR-Splits-Setup.exe --self-test <absolute-report-path.json>` and check `result: PASS`. This extracts in a temporary directory, rejects unsafe ZIP paths, verifies idempotence and data preservation, and imports the standalone Python/TLS runtime and 27-stage catalogue.
 4. Run `python -m records.test_online` for authentication/DPAPI checks.
 
 Output: `records/dist/ACR-Splits-Setup.exe` and `SHA256SUMS.txt`.
@@ -43,3 +43,7 @@ The existing GitHub repository, download asset filename, AppData folder and lega
 ## Version 0.8.1
 
 Simplified desktop navigation: Session and My times. Settings and Leaderboards were removed; EN / ES is now a small selector in the top bar. Language choice is remembered. Capture and compact-window controls remain directly accessible. Website leaderboards stay at acrsplits.online. Existing official installers update automatically on the next launch; legacy portable clients need the standalone installer once.
+
+## Version 0.8.2
+
+Adds Sando Rally Chile BioBio and Reverse using the game's exact result IDs. Existing locally captured attempts can be reconciled after restarting the app. Upload still requires the pilot's confirmation. Reverse stages retain the website's existing visibility policy.

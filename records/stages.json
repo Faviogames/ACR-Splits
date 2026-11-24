@@ -198,5 +198,21 @@
     "country": "Suecia",
     "country_code": "SE",
     "variant": "SS4"
+  },
+  {
+    "id": "SandoChlBioFull",
+    "slug": "cl_biobio",
+    "name": "Chile BioBio",
+    "country": "Chile",
+    "country_code": "CL",
+    "variant": "Full"
+  },
+  {
+    "id": "SandoChlBioRevFull",
+    "slug": "cl_biobior",
+    "name": "Chile BioBio · inverso",
+    "country": "Chile",
+    "country_code": "CL",
+    "variant": "FullR"
   }
 ]

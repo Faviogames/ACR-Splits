@@ -1,6 +1,6 @@
 $ErrorActionPreference = 'Stop'
 $recordsRoot = $PSScriptRoot
-$version = '0.8.1'
+$version = '0.8.2'
 $dist = Join-Path $recordsRoot 'dist'
 $payload = Join-Path $dist 'payload'
 New-Item -ItemType Directory -Path $dist,$payload -Force | Out-Null

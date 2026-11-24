@@ -6,7 +6,7 @@ using System.Text.Json;
 
 internal static class Program
 {
-    const string ReleaseVersion = "0.8.1", Repo = "Faviogames/ACR-Splits";
+    const string ReleaseVersion = "0.8.2", Repo = "Faviogames/ACR-Splits";
     static readonly string Home = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ACRSplits");
     static readonly JsonSerializerOptions Json = new() { WriteIndented = true };
     [STAThread]
@@ -153,7 +153,7 @@ internal static class Program
             if (File.ReadAllText(saved) != "preserved") throw new IOException("Data lost");
             var folder = Path.Combine(root, "versions", ReleaseVersion);
             var start = new ProcessStartInfo(Path.Combine(folder, "python", "python.exe")) { WorkingDirectory = folder, UseShellExecute = false, CreateNoWindow = true, RedirectStandardOutput = true, RedirectStandardError = true };
-            start.ArgumentList.Add("-c"); start.ArgumentList.Add("import ssl,ctypes; from records.app import stage_catalog; c=stage_catalog(); assert len(c)==25; assert 'wrcgkess2full' in c; print('PASS standalone Python, TLS, Windows bindings and 25-stage catalogue')");
+            start.ArgumentList.Add("-c"); start.ArgumentList.Add("import ssl,ctypes; from records.app import stage_catalog; c=stage_catalog(); assert len(c)==27; assert {'wrcgkess2full','sandochlbiofull','sandochlbiorevfull'} <= c.keys(); print('PASS standalone Python, TLS, Windows bindings and 27-stage catalogue')");
             using var python = Process.Start(start)!; var output = python.StandardOutput.ReadToEnd(); var errors = python.StandardError.ReadToEnd(); python.WaitForExit();
             if (python.ExitCode != 0) throw new IOException(errors);
             File.WriteAllText(report, JsonSerializer.Serialize(new { result = "PASS", version = ReleaseVersion, checks = new[] { "isolated extraction", "idempotent installation", "existing session preserved", output.Trim() } }, Json));

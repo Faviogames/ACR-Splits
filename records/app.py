@@ -199,7 +199,9 @@ class Engine:
         for path in (self.data / "captures").glob("*.json"):
             attempt = read_json(path)
             baseline_file = attempt.get("baseline_report_file")
-            if not baseline_file or attempt.get("official_time_ms") is not None or attempt.get("result_status") == "unsupported_stage":
+            if not baseline_file or attempt.get("official_time_ms") is not None:
+                continue
+            if attempt.get("result_status") == "unsupported_stage" and attempt.get("stage_game_id", "").casefold() not in self.catalog:
                 continue
             if attempt.get("capture_status") != "closed":
                 continue
@@ -212,6 +214,7 @@ class Engine:
                 attempt.update(result_status="unsupported_stage", stage_game_id=result["stage_game_id"])
                 write_json(path, attempt)
                 continue
+            result.pop("result_status", None)
             result_id = result["save_evidence"]["result_id"]
             if any(item["id"] == result_id for item in self.items):
                 continue
@@ -278,7 +281,7 @@ class Engine:
                 status = "waiting_result" if self.recorder.candidate else "recording"
             else:
                 status = "ready" if self.live is not None else "game_closed"
-            return {"app": "ACR MOD RECORDS", "version": "0.8.1", "status": status,
+            return {"app": "ACR MOD RECORDS", "version": "0.8.2", "status": status,
                     "connected": self.live is not None, "auto_capture": bool(self.settings["auto_capture"]),
                     "language": self.settings["language"],
                     "error": self.error, "live": None if self.live is None else {
@@ -406,7 +409,7 @@ class Handler(BaseHTTPRequestHandler):
                     return self.send(400, {"error": str(error)})
             if path == "/api/leaderboard":
                 stage = parse_qs(urlsplit(self.path).query).get("stage", [""])[0]
-                if not re.fullmatch(r"Wrcg[A-Za-z0-9_]{1,90}", stage):
+                if not re.fullmatch(r"(?:Wrcg[A-Za-z0-9_]{1,90}|SandoChlBio(?:Rev)?Full)", stage):
                     return self.send(400, {"error": "Invalid stage"})
                 try:
                     cached = getattr(self.server, "board_cache", None)
