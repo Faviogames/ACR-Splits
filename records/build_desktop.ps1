@@ -1,6 +1,6 @@
 $ErrorActionPreference = 'Stop'
 $recordsRoot = $PSScriptRoot
-$version = '0.8.2'
+$version = '0.8.3'
 $dist = Join-Path $recordsRoot 'dist'
 $payload = Join-Path $dist 'payload'
 New-Item -ItemType Directory -Path $dist,$payload -Force | Out-Null
@@ -26,4 +26,5 @@ Copy-Item (Join-Path $dist 'setup/ACR-Splits-Setup.exe') (Join-Path $dist 'ACR-S
 $digest = (Get-FileHash (Join-Path $dist 'ACR-Splits-Setup.exe') -Algorithm SHA256).Hash.ToLowerInvariant()
 "$digest  ACR-Splits-Setup.exe" | Set-Content (Join-Path $dist 'SHA256SUMS.txt') -Encoding ascii
 Write-Output "Built $version : $digest"
+
 

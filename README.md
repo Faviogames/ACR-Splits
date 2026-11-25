@@ -47,3 +47,8 @@ Simplified desktop navigation: Session and My times. Settings and Leaderboards w
 ## Version 0.8.2
 
 Adds Sando Rally Chile BioBio and Reverse using the game's exact result IDs. Existing locally captured attempts can be reconciled after restarting the app. Upload still requires the pilot's confirmation. Reverse stages retain the website's existing visibility policy.
+
+## Version 0.8.3
+
+Adds Felgueiras (WRCG Portugal SS3). Existing complete captures can recover their official results after restarting; players still choose when to upload. The website validates the stage against its independent installed-map reference. Existing data and penalties are preserved.
+

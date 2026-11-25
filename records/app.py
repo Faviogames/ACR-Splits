@@ -281,7 +281,7 @@ class Engine:
                 status = "waiting_result" if self.recorder.candidate else "recording"
             else:
                 status = "ready" if self.live is not None else "game_closed"
-            return {"app": "ACR MOD RECORDS", "version": "0.8.2", "status": status,
+            return {"app": "ACR MOD RECORDS", "version": "0.8.3", "status": status,
                     "connected": self.live is not None, "auto_capture": bool(self.settings["auto_capture"]),
                     "language": self.settings["language"],
                     "error": self.error, "live": None if self.live is None else {
@@ -524,4 +524,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 

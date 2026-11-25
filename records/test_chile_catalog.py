@@ -1,6 +1,7 @@
 """Previously unsupported attempts become eligible only after an exact save match."""
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 from records.app import Engine,read_json,write_json
 
@@ -16,7 +17,11 @@ class ChileCatalogueTests(unittest.TestCase):
                      'result_status':'unsupported_stage','baseline_report_file':'before.json',
                      'trace_file':'attempt.jsonl','started_utc':'2026-11-24T00:00:00+00:00'}
             path=data/'captures/attempt.json';write_json(path,attempt)
-            engine=Engine(data,monitor=False)
+            # Isolate the bundled capture directory as well as the writable data.
+            from records.app import ROOT
+            write_json(data/'stages.json',read_json(ROOT/'stages.json'))
+            with patch('records.app.ROOT',data):
+                engine=Engine(data,monitor=False)
             engine.report={'source_sha256':'b'*64,'results':[{'mode':'DefaultFreePractice',
                 'stage_id':stage,'started_utc':'2026-11-24T00:00:00+00:00','runs':[
                 {'index':1,'car':'TestCar','raw_time_ms':10000,'penalty_ms':2000,'official_time_ms':12000}]}]}
@@ -30,6 +35,12 @@ class ChileCatalogueTests(unittest.TestCase):
             self.assertEqual(result['penalty_ms'],2000)
             self.assertNotEqual(result.get('result_status'),'unsupported_stage')
             self.assertTrue(items[0]['can_publish'])
+
+    def test_felgueiras_recovers_without_requiring_another_drive(self):
+        result, items = self.recover('WrcgPtSS3Full')
+        self.assertEqual(result['official_time_ms'], 12000)
+        self.assertEqual(result['penalty_ms'], 2000)
+        self.assertTrue(items[0]['can_publish'])
 
     def test_unknown_stage_stays_unsupported(self):
         result,items=self.recover('SandoOtherFull')

@@ -214,5 +214,13 @@
     "country": "Chile",
     "country_code": "CL",
     "variant": "FullR"
+  },
+  {
+    "id": "WrcgPtSS3Full",
+    "slug": "pt_ss3",
+    "name": "Felgueiras",
+    "country": "Portugal",
+    "country_code": "PT",
+    "variant": "SS3"
   }
 ]

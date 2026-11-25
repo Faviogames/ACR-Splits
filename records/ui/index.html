@@ -27,7 +27,7 @@
       <button class="nav-item active" data-view="session"><svg><use href="#i-flag"/></svg>Sesión<span class="nav-dot"></span></button>
       <button class="nav-item" data-view="history"><svg><use href="#i-clock"/></svg>Mis tiempos<span class="count" id="history-count">0</span></button>
     </nav>
-    <div class="sidebar-bottom"><span class="build">VERSIÓN · 0.8.2</span></div>
+    <div class="sidebar-bottom"><span class="build">VERSIÓN · 0.8.3</span></div>
   </aside>
   <main>
     <header class="topbar">
@@ -56,5 +56,6 @@
 <dialog id="publish-dialog"><button class="dialog-close" aria-label="Cerrar">×</button><span class="eyebrow">ACR LAPS ONLINE</span><h2 id="publish-title">Enviar tu pasada</h2><p id="publish-description">Compartirás tu nombre de piloto, tramo, coche y tiempos con ACR LAPS ONLINE. La traza compacta se guardará de forma privada en Supabase para revisarla. El servidor comprobará la trazada y publicará el resultado automáticamente si pasa los controles. Los casos dudosos quedan pendientes con un motivo.</p><button class="primary-button" id="dialog-ok">Enviar pasada</button></dialog>
 <dialog id="name-dialog" aria-labelledby="name-title"><button class="name-close dialog-close" aria-label="Elegir nombre más tarde">×</button><span class="eyebrow">TU IDENTIDAD EN PISTA</span><h2 id="name-title">Elige tu nombre de piloto.</h2><p>Aparecerá junto a tus récords. Solo puedes elegirlo una vez y queda vinculado a tu cuenta de Discord, también si cambias de PC.</p><form id="name-form"><label for="pilot-name">Nombre de piloto</label><input id="pilot-name" name="name" minlength="2" maxlength="32" required autocomplete="off" spellcheck="false" aria-describedby="name-help name-error"><p id="name-help">De 2 a 32 caracteres. Empieza con una letra. Puedes usar letras, números, espacios, punto, guion y guion bajo.</p><label class="name-confirm"><input type="checkbox" id="name-confirm" required>He revisado el nombre y entiendo que no podré cambiarlo.</label><p id="name-error" role="alert"></p><button class="primary-button" id="save-name" type="submit">Guardar nombre definitivo</button></form><button id="name-logout" type="button" class="secondary-button">Cerrar sesión de Discord</button></dialog>
 </body></html>
+
 
 
