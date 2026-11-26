@@ -5,7 +5,8 @@
     "name": "ZonneBeke",
     "country": "Bélgica",
     "country_code": "BE",
-    "variant": "ES1"
+    "variant": "ES1",
+    "source": "WRC to ACR"
   },
   {
     "id": "WrcgBeSS1Full",
@@ -13,7 +14,8 @@
     "name": "Dikkebus",
     "country": "Bélgica",
     "country_code": "BE",
-    "variant": "SS1"
+    "variant": "SS1",
+    "source": "WRC to ACR"
   },
   {
     "id": "WrcgBeSS2Full",
@@ -21,7 +23,8 @@
     "name": "Kemmelberg",
     "country": "Bélgica",
     "country_code": "BE",
-    "variant": "SS2"
+    "variant": "SS2",
+    "source": "WRC to ACR"
   },
   {
     "id": "WrcgEsSS1Full",
@@ -29,7 +32,8 @@
     "name": "Riudecanyes",
     "country": "España",
     "country_code": "ES",
-    "variant": "SS1"
+    "variant": "SS1",
+    "source": "WRC to ACR"
   },
   {
     "id": "WrcgEsSS1RFull",
@@ -37,7 +41,8 @@
     "name": "Riudecanyes · inverso",
     "country": "España",
     "country_code": "ES",
-    "variant": "SS1R"
+    "variant": "SS1R",
+    "source": "WRC to ACR"
   },
   {
     "id": "WrcgEsSS4Full",
@@ -45,7 +50,8 @@
     "name": "Savallà",
     "country": "España",
     "country_code": "ES",
-    "variant": "SS4"
+    "variant": "SS4",
+    "source": "WRC to ACR"
   },
   {
     "id": "WrcgEsSS4RFull",
@@ -53,7 +59,8 @@
     "name": "Savallà · inverso",
     "country": "España",
     "country_code": "ES",
-    "variant": "SS4R"
+    "variant": "SS4R",
+    "source": "WRC to ACR"
   },
   {
     "id": "WrcgFrSS1Full",
@@ -61,7 +68,8 @@
     "name": "Pietrosella",
     "country": "Francia",
     "country_code": "FR",
-    "variant": "SS1"
+    "variant": "SS1",
+    "source": "WRC to ACR"
   },
   {
     "id": "WrcgFrSS1RFull",
@@ -69,7 +77,8 @@
     "name": "Pietrosella · inverso",
     "country": "Francia",
     "country_code": "FR",
-    "variant": "SS1R"
+    "variant": "SS1R",
+    "source": "WRC to ACR"
   },
   {
     "id": "WrcgGrSS3Full",
@@ -77,7 +86,8 @@
     "name": "Paleohori",
     "country": "Grecia",
     "country_code": "GR",
-    "variant": "SS3"
+    "variant": "SS3",
+    "source": "WRC to ACR"
   },
   {
     "id": "WrcgItSS1Full",
@@ -85,7 +95,8 @@
     "name": "Ronde",
     "country": "Italia",
     "country_code": "IT",
-    "variant": "SS1"
+    "variant": "SS1",
+    "source": "WRC to ACR"
   },
   {
     "id": "WrcgItSS1RFull",
@@ -93,7 +104,8 @@
     "name": "Ronde · inverso",
     "country": "Italia",
     "country_code": "IT",
-    "variant": "SS1R"
+    "variant": "SS1R",
+    "source": "WRC to ACR"
   },
   {
     "id": "WrcgKeES1Full",
@@ -101,7 +113,8 @@
     "name": "Ntulele",
     "country": "Kenya",
     "country_code": "KE",
-    "variant": "ES1"
+    "variant": "ES1",
+    "source": "WRC to ACR"
   },
   {
     "id": "WrcgKeES1RFull",
@@ -109,7 +122,8 @@
     "name": "Ntulele · inverso",
     "country": "Kenya",
     "country_code": "KE",
-    "variant": "ES1R"
+    "variant": "ES1R",
+    "source": "WRC to ACR"
   },
   {
     "id": "WrcgKeSS1Full",
@@ -117,7 +131,8 @@
     "name": "Ngema",
     "country": "Kenya",
     "country_code": "KE",
-    "variant": "SS1"
+    "variant": "SS1",
+    "source": "WRC to ACR"
   },
   {
     "id": "WrcgKeSS1RFull",
@@ -125,7 +140,8 @@
     "name": "Ngema · inverso",
     "country": "Kenya",
     "country_code": "KE",
-    "variant": "SS1R"
+    "variant": "SS1R",
+    "source": "WRC to ACR"
   },
   {
     "id": "WrcgKeSS2Full",
@@ -133,7 +149,8 @@
     "name": "Seyabei",
     "country": "Kenya",
     "country_code": "KE",
-    "variant": "SS2"
+    "variant": "SS2",
+    "source": "WRC to ACR"
   },
   {
     "id": "WrcgKeSS2RFull",
@@ -141,7 +158,8 @@
     "name": "Seyabei · inverso",
     "country": "Kenya",
     "country_code": "KE",
-    "variant": "SS2R"
+    "variant": "SS2R",
+    "source": "WRC to ACR"
   },
   {
     "id": "WrcgMxES1Full",
@@ -149,7 +167,8 @@
     "name": "El Chocolate",
     "country": "México",
     "country_code": "MX",
-    "variant": "ES1"
+    "variant": "ES1",
+    "source": "WRC to ACR"
   },
   {
     "id": "WrcgMxSS1Full",
@@ -157,7 +176,8 @@
     "name": "Media Luna",
     "country": "México",
     "country_code": "MX",
-    "variant": "SS1"
+    "variant": "SS1",
+    "source": "WRC to ACR"
   },
   {
     "id": "WrcgMxSS2Full",
@@ -165,7 +185,8 @@
     "name": "Ibarrilla",
     "country": "México",
     "country_code": "MX",
-    "variant": "SS2"
+    "variant": "SS2",
+    "source": "WRC to ACR"
   },
   {
     "id": "WrcgDePanzerplatteFull",
@@ -173,7 +194,8 @@
     "name": "Arena Panzerplatte",
     "country": "Alemania",
     "country_code": "DE",
-    "variant": "SSS"
+    "variant": "SSS",
+    "source": "WRC to ACR"
   },
   {
     "id": "WrcgPtSS4Full",
@@ -181,7 +203,8 @@
     "name": "Arganil",
     "country": "Portugal",
     "country_code": "PT",
-    "variant": "SS4"
+    "variant": "SS4",
+    "source": "WRC to ACR"
   },
   {
     "id": "WrcgSeSS3Full",
@@ -189,7 +212,8 @@
     "name": "Sävar",
     "country": "Suecia",
     "country_code": "SE",
-    "variant": "SS3"
+    "variant": "SS3",
+    "source": "WRC to ACR"
   },
   {
     "id": "WrcgSeSS4Full",
@@ -197,7 +221,8 @@
     "name": "Brattby",
     "country": "Suecia",
     "country_code": "SE",
-    "variant": "SS4"
+    "variant": "SS4",
+    "source": "WRC to ACR"
   },
   {
     "id": "SandoChlBioFull",
@@ -205,7 +230,8 @@
     "name": "Chile BioBio",
     "country": "Chile",
     "country_code": "CL",
-    "variant": "Full"
+    "variant": "Full",
+    "source": "Sando Rally"
   },
   {
     "id": "SandoChlBioRevFull",
@@ -213,7 +239,8 @@
     "name": "Chile BioBio · inverso",
     "country": "Chile",
     "country_code": "CL",
-    "variant": "FullR"
+    "variant": "FullR",
+    "source": "Sando Rally"
   },
   {
     "id": "WrcgPtSS3Full",
@@ -221,7 +248,8 @@
     "name": "Felgueiras",
     "country": "Portugal",
     "country_code": "PT",
-    "variant": "SS3"
+    "variant": "SS3",
+    "source": "WRC to ACR"
   },
   {
     "id": "AcrXsThi04FullForward",
@@ -229,6 +257,7 @@
     "name": "Thiérache S1",
     "country": "France",
     "country_code": "FR",
-    "variant": "S1"
+    "variant": "S1",
+    "source": "Oxmod"
   }
 ]
