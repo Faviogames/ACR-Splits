@@ -42,6 +42,12 @@ class ChileCatalogueTests(unittest.TestCase):
         self.assertEqual(result['penalty_ms'], 2000)
         self.assertTrue(items[0]['can_publish'])
 
+    def test_thierache_recovers_without_requiring_another_drive(self):
+        result, items = self.recover('AcrXsThi04FullForward')
+        self.assertEqual(result['official_time_ms'], 12000)
+        self.assertEqual(result['penalty_ms'], 2000)
+        self.assertTrue(items[0]['can_publish'])
+
     def test_unknown_stage_stays_unsupported(self):
         result,items=self.recover('SandoOtherFull')
         self.assertEqual(result['result_status'],'unsupported_stage')

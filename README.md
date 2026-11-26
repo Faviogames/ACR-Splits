@@ -52,3 +52,7 @@ Adds Sando Rally Chile BioBio and Reverse using the game's exact result IDs. Exi
 
 Adds Felgueiras (WRCG Portugal SS3). Existing complete captures can recover their official results after restarting; players still choose when to upload. The website validates the stage against its independent installed-map reference. Existing data and penalties are preserved.
 
+
+## Version 0.8.4
+
+Recognizes Oxmod Thiérache S1 (`AcrXsThi04FullForward`) and recovers previously unsupported complete captures using an exact new game-save result match. Existing game penalties are preserved. Route validation remains pending until an independent reference passes verification.

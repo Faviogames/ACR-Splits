@@ -222,5 +222,13 @@
     "country": "Portugal",
     "country_code": "PT",
     "variant": "SS3"
+  },
+  {
+    "id": "AcrXsThi04FullForward",
+    "slug": "thierache_s1",
+    "name": "Thiérache S1",
+    "country": "France",
+    "country_code": "FR",
+    "variant": "S1"
   }
 ]
